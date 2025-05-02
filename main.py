@@ -212,14 +212,14 @@ def translator_thread():
     location = "southeastasia"
     endpoint = "https://api.cognitive.microsofttranslator.com/translate"
     # lang_url =  "https://api.cognitive.microsofttranslator.com/languages?api-version=3.0"
-    
+
     # langs_response = requests.get(lang_url).json()
     # print(langs_response)
-    
+
     params = {
         'api-version': '3.0',
         'from': 'en-US',
-        'to': ['id','jv'],
+        'to': ['id'],
     }
 
     headers = {
@@ -237,7 +237,8 @@ def translator_thread():
             sentence = text_queue.get()
             # You can pass more than one object in body.
             body = [{'text': sentence}]
-            request = requests.post(endpoint, params=params, headers=headers, json=body)
+            request = requests.post(
+                endpoint, params=params, headers=headers, json=body)
             response = request.json()
             translated = f"{response}"
             translated_text_queue.put(translated)
